@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/provider/AuthProvider";
+import { NavMenu } from "@/components/menu/nav-menu";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"], // Adjust weights as needed
+  display: "swap", // Controls font display behavior
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,12 +18,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body
+          className={cn("flex justify-between flex-col", poppins.className)}
+        >
+          <div>
+            <NavMenu />
+            {children}
+          </div>
+        </body>
+      </html>
+    </AuthProvider>
   );
 }
