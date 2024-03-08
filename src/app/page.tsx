@@ -1,16 +1,12 @@
 import { Header } from "@/components/auth/header";
 import { LoginButton } from "@/components/auth/login-button";
+import { HomeCarousel } from "@/components/home-page/home-carousel";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <main className="">
-      <div className="space-y-6 text-center flex flex-col">
-        <Header title="Wellcome to my demo" label="What are you want for?" />
-        <LoginButton mode="modal" asChild>
-          <Button>Login</Button>
-        </LoginButton>
-      </div>
+      <HomeCarousel />
     </main>
   );
 }
