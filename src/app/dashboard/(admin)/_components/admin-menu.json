@@ -1,0 +1,22 @@
+[
+  {
+    "id": 2,
+    "name": "Hero",
+    "url": "/dashboard/hero"
+  },
+  {
+    "id": 3,
+    "name": "Categories",
+    "url": "/dashboard/categories"
+  },
+  {
+    "id": 4,
+    "name": "Products",
+    "url": "/dashboard/products"
+  },
+  {
+    "id": 5,
+    "name": "Brands",
+    "url": "/dashboard/brands"
+  }
+]

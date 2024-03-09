@@ -1,14 +1,10 @@
-import { UserInfo } from "@/components/custom/user-info";
 import { CurrentUser } from "@/lib/current-user";
 
 const DashboardPage = async () => {
-  const user = await CurrentUser();
+  const currentUser = await CurrentUser();
   return (
-    <div className="">
-      <p>{user?.name}</p>
-      <p>
-        <UserInfo />
-      </p>
+    <div className="text-xl md:text-2xl lg:text-3xl">
+      Howdy {currentUser?.name}
     </div>
   );
 };
