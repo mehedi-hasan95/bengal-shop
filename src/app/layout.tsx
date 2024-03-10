@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AuthProvider } from "@/provider/AuthProvider";
 import { NavMenu } from "@/components/menu/nav-menu";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
             <NavMenu />
             {children}
           </div>
+          <Toaster richColors position="top-center" />
         </body>
       </html>
     </AuthProvider>

@@ -1,9 +1,20 @@
 import { HeroForm } from "../../_components/carousel-form";
+import { prismaDb } from "@/lib/prismaDb";
 
-const HeroCarouselId = () => {
+const HeroCarouselId = async ({
+  params,
+}: {
+  params: { carouselId: string };
+}) => {
+  const data = await prismaDb.heroCarousel.findUnique({
+    where: {
+      id: params.carouselId,
+    },
+  });
+
   return (
-    <div>
-      <HeroForm />
+    <div className="pb-10">
+      <HeroForm initianData={data} />
     </div>
   );
 };
