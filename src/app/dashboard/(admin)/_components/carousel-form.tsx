@@ -109,7 +109,7 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
           >
             <Button variant={"destructive"} disabled={isPending} size={"sm"}>
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete Hotel
+              Delete Carousel
             </Button>
           </DeleteModal>
         )}

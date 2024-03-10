@@ -87,7 +87,7 @@ export const HeroCell: React.FC<HeroCellProps> = ({ data }) => {
           <DeleteModal id={data.id} title={data.title} onDelete={HandleDelete}>
             <Button variant={"destructive"} disabled={isPending} size={"sm"}>
               <Trash className="mr-2 h-4 w-4" />
-              Delete Hotel
+              Delete Carousel
             </Button>
           </DeleteModal>
         </DropdownMenuItem>
