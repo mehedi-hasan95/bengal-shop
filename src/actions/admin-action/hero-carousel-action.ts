@@ -49,3 +49,29 @@ export const UpdateHeroCarouselAction = async (
     return { error: "Something went wrong" };
   }
 };
+
+export const DeleteHeroCarouselAction = async (id: string) => {
+  try {
+    const userRole = await CurrentUserRole();
+    if (userRole !== "ADMIN") return { error: "Unauthorize User" };
+    await prismaDb.heroCarousel.delete({
+      where: {
+        id,
+      },
+    });
+    revalidatePath("/");
+    revalidatePath("/dashboard/hero");
+    return { success: "Hero Carousel Delete Successfully" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};
+
+export const GetAllHeroCarouselAction = async () => {
+  const data = await prismaDb.heroCarousel.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return data;
+};

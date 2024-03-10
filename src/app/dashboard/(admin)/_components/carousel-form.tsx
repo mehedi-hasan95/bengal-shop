@@ -18,17 +18,32 @@ import { ImageUpload } from "@/components/custom/image-upload";
 import { useTransition } from "react";
 import {
   CreateHeroCarouselAction,
+  DeleteHeroCarouselAction,
   UpdateHeroCarouselAction,
 } from "@/actions/admin-action/hero-carousel-action";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { HeroCarousel } from "@prisma/client";
 import { TitleLabel } from "@/components/common/title-label";
+import { useRouter } from "next/navigation";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { DeleteModal } from "@/components/common/delete-modal";
 
 interface HeroFormProps {
   initianData: HeroCarousel | null;
 }
 export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
+  const router = useRouter();
   const title = initianData ? "Update Carousel" : "Create Carousel";
   const action = initianData ? "Update" : "Create";
   const afterAction = initianData ? "Updateing" : "Creating";
@@ -52,6 +67,7 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
         ? UpdateHeroCarouselAction(values, initianData?.id).then((data) => {
             if (data.success) {
               toast.success(data.success);
+              router.replace("/dashboard/hero");
             }
             if (data.error) {
               toast.error(data.error);
@@ -60,6 +76,7 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
         : CreateHeroCarouselAction(values).then((data) => {
             if (data.success) {
               toast.success(data.success);
+              router.replace("/dashboard/hero");
             }
             if (data.error) {
               toast.error(data.error);
@@ -67,9 +84,36 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
           });
     });
   }
+  const HandleDelete = (id: string) => {
+    startTransition(() => {
+      DeleteHeroCarouselAction(id).then((data) => {
+        if (data.success) {
+          toast.success(data.success);
+          router.replace("/dashboard/hero");
+        }
+        if (data.error) {
+          toast.error(data?.error);
+        }
+      });
+    });
+  };
   return (
     <div>
-      <TitleLabel label={title} />
+      <div className="flex justify-between items-center">
+        <TitleLabel label={title} />
+        {initianData && (
+          <DeleteModal
+            id={initianData.id}
+            onDelete={HandleDelete}
+            title={initianData.title}
+          >
+            <Button variant={"destructive"} disabled={isPending} size={"sm"}>
+              <Trash2 className="mr-2 h-4 w-4" />
+              Delete Hotel
+            </Button>
+          </DeleteModal>
+        )}
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormInput
