@@ -80,8 +80,19 @@ model HeroCarousel {
 }
 
 model Category {
-  id    String @id @default(cuid())
-  title String @unique
-  url   String @unique
-  image String
+  id        String   @id @default(cuid())
+  title     String   @unique
+  url       String   @unique
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Brand {
+  id        String   @id @default(cuid())
+  title     String   @unique
+  url       String   @unique
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

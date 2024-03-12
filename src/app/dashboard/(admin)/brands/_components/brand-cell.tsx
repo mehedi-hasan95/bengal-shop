@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { CategoryTypes } from "./category-columns";
+import { BrandTypes } from "./brand-columns";
 import { useRouter } from "next/navigation";
 import { DeleteCategoryAction } from "@/actions/admin-action/admin-category-action";
 import { toast } from "sonner";
@@ -17,16 +17,17 @@ import { Button } from "@/components/ui/button";
 import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import Link from "next/link";
 import { DeleteModal } from "@/components/common/delete-modal";
+import { DeleteBrandAction } from "@/actions/admin-action/admin-brand-action";
 
-interface CategoryCellProps {
-  data: CategoryTypes;
+interface BrandCellProps {
+  data: BrandTypes;
 }
-export const CategoryCell = ({ data }: CategoryCellProps) => {
+export const BrandCell = ({ data }: BrandCellProps) => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const DeleteCategory = (id: string) => {
+  const DeleteBrand = (id: string) => {
     startTransition(() => {
-      DeleteCategoryAction(id).then((data) => {
+      DeleteBrandAction(id).then((data) => {
         if (data.success) {
           toast.success(data.success);
           router.refresh();
@@ -46,28 +47,24 @@ export const CategoryCell = ({ data }: CategoryCellProps) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>Category Actions</DropdownMenuLabel>
+        <DropdownMenuLabel>Brand Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex items-center gap-x-1 cursor-pointer">
           <Link
             href={`/dashboard/categories/${data.id}`}
             className="flex items-center gap-x-1 cursor-pointer"
           >
-            <Edit className="h-4 w-4" /> Edit Category
+            <Edit className="h-4 w-4" /> Edit Brand
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
           className="flex items-center gap-x-1 cursor-pointer"
           asChild
         >
-          <DeleteModal
-            id={data.id}
-            title={data.title}
-            onDelete={DeleteCategory}
-          >
+          <DeleteModal id={data.id} title={data.title} onDelete={DeleteBrand}>
             <Button variant={"destructive"} disabled={isPending} size={"sm"}>
               <Trash className="mr-2 h-4 w-4" />
-              Delete Category
+              Delete Brand
             </Button>
           </DeleteModal>
         </DropdownMenuItem>

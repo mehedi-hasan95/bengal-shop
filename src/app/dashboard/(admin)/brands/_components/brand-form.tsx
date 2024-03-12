@@ -3,7 +3,10 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CategorySchema } from "@/schema/admin-schema/admin-schema";
+import {
+  BrandSchema,
+  CategorySchema,
+} from "@/schema/admin-schema/admin-schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,35 +16,34 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { FormInput } from "@/components/common/form-input";
 import { ImageUpload } from "@/components/custom/image-upload";
 import { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
-import {
-  CreateCategoryAction,
-  DeleteCategoryAction,
-  UpdateCategoryAction,
-} from "@/actions/admin-action/admin-category-action";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Category } from "@prisma/client";
+import { Brand } from "@prisma/client";
 import { TitleLabel } from "@/components/common/title-label";
 import { Loader2 } from "lucide-react";
 import { DeleteModal } from "@/components/common/delete-modal";
+import {
+  CreateBrandAction,
+  DeleteBrandAction,
+  UpdateBrandAction,
+} from "@/actions/admin-action/admin-brand-action";
 
-interface CategoryFormProps {
-  initialData: Category | null;
+interface BrandFormProps {
+  initialData: Brand | null;
 }
-export const CategoryForm = ({ initialData }: CategoryFormProps) => {
-  const title = initialData ? "Update Category" : "Create Category";
+export const BrandForm = ({ initialData }: BrandFormProps) => {
+  const title = initialData ? "Update Brand" : "Create Brand";
   const action = initialData ? "Update" : "Create";
   const afterAction = initialData ? "Updating" : "Createing";
   const router = useRouter();
   const [name, setName] = useState<string | null>("");
   const [isPending, startTransition] = useTransition();
   // 1. Define your form.
-  const form = useForm<z.infer<typeof CategorySchema>>({
-    resolver: zodResolver(CategorySchema),
+  const form = useForm<z.infer<typeof BrandSchema>>({
+    resolver: zodResolver(BrandSchema),
     defaultValues: initialData || {
       title: "",
       image: "",
@@ -49,7 +51,7 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof CategorySchema>) {
+  function onSubmit(values: z.infer<typeof BrandSchema>) {
     // Convert slug
     const slugify = (str: string) =>
       str
@@ -67,19 +69,19 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
 
     startTransition(() => {
       initialData
-        ? UpdateCategoryAction(data, initialData.id).then((data) => {
+        ? UpdateBrandAction(data, initialData.id).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/categories");
+              router.replace("/dashboard/brands");
             }
             if (data.error) {
               toast.error(data.error);
             }
           })
-        : CreateCategoryAction(data).then((data) => {
+        : CreateBrandAction(data).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/categories");
+              router.replace("/dashboard/brands");
             }
             if (data.error) {
               toast.error(data.error);
@@ -88,12 +90,12 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
     });
   }
 
-  const DeleteCategory = (id: string) => {
+  const DeleteBrand = (id: string) => {
     startTransition(() => {
-      DeleteCategoryAction(id).then((data) => {
+      DeleteBrandAction(id).then((data) => {
         if (data.success) {
           toast.success(data.success);
-          router.replace("/dashboard/categories");
+          router.replace("/dashboard/brands");
         }
         if (data.error) {
           toast.error(data.error);
@@ -107,7 +109,7 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
         <TitleLabel label={title} />
         {initialData && (
           <DeleteModal
-            onDelete={DeleteCategory}
+            onDelete={DeleteBrand}
             id={initialData?.id as string}
             title={initialData?.title as string}
           >
@@ -122,11 +124,11 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category Name</FormLabel>
+                <FormLabel>Brand Name</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isPending}
-                    placeholder="Category Title"
+                    placeholder="Brand Title"
                     {...field}
                     defaultValue={initialData?.title}
                     value={setName(field.value) as any}
@@ -141,11 +143,11 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
             name="url"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category Url</FormLabel>
+                <FormLabel>Brand Url</FormLabel>
                 <FormControl>
                   <Input
                     disabled={isPending}
-                    placeholder="Category url"
+                    placeholder="Brand url"
                     {...field}
                     defaultValue={name as string}
                   />
@@ -161,7 +163,7 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
             name="image"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Category Image</FormLabel>
+                <FormLabel>Brand Image</FormLabel>
                 <FormControl>
                   <ImageUpload
                     disabled={isPending}

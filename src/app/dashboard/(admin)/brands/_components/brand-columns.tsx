@@ -5,11 +5,11 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
-import { CategoryCell } from "./category-cell";
+import { BrandCell } from "./brand-cell";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type CategoryTypes = {
+export type BrandTypes = {
   id: string;
   image: string;
   title: string;
@@ -17,7 +17,7 @@ export type CategoryTypes = {
   createdAt: string;
 };
 
-export const categoryColumns: ColumnDef<CategoryTypes>[] = [
+export const brandColumns: ColumnDef<BrandTypes>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {
@@ -27,7 +27,7 @@ export const categoryColumns: ColumnDef<CategoryTypes>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0"
         >
-          Category Name
+          Brand Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -42,7 +42,7 @@ export const categoryColumns: ColumnDef<CategoryTypes>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0"
         >
-          Category Url
+          Brand Url
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -72,13 +72,13 @@ export const categoryColumns: ColumnDef<CategoryTypes>[] = [
         alt=""
         height={500}
         width={500}
-        className="h-10 w-10"
+        className="h-10 w-16"
       />
     ),
   },
   {
     id: "action",
     header: "Actions",
-    cell: ({ row }) => <CategoryCell data={row.original} />,
+    cell: ({ row }) => <BrandCell data={row.original} />,
   },
 ];
