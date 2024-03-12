@@ -22,3 +22,15 @@ export const HeroSchema = z.object({
     message: "Image is required",
   }),
 });
+
+export const CategorySchema = z.object({
+  title: z.string().min(2, {
+    message: "Title is required",
+  }),
+  url: z.string().min(2, {
+    message: "Link is required",
+  }),
+  image: z.string().min(2, {
+    message: "Image is required",
+  }),
+});

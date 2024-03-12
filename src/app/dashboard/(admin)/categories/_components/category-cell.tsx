@@ -1,10 +1,10 @@
 "use client";
 
 import { useTransition } from "react";
-import { HeroCarousel } from "./hero-columns";
-import { useOrigin } from "@/hooks/use-origin";
-import { toast } from "sonner";
+import { CategoryTypes } from "./category-columns";
 import { useRouter } from "next/navigation";
+import { DeleteCategoryAction } from "@/actions/admin-action/admin-category-action";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,28 +14,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { Copy, Edit3, Eye, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import Link from "next/link";
 import { DeleteModal } from "@/components/common/delete-modal";
-import { DeleteHeroCarouselAction } from "@/actions/admin-action/hero-carousel-action";
 
-interface HeroCellProps {
-  data: HeroCarousel;
+interface CategoryCellProps {
+  data: CategoryTypes;
 }
-export const HeroCell: React.FC<HeroCellProps> = ({ data }) => {
-  const [isPending, startTransition] = useTransition();
+export const CategoryCell = ({ data }: CategoryCellProps) => {
   const router = useRouter();
-  const origin = useOrigin();
-  const url = `${origin}/shop/${data.id}`;
-  const onCopy = () => {
-    navigator.clipboard.writeText(url);
-    toast.success(`${url} is copied`);
-  };
-
-  //   Delete
-  const HandleDelete = (id: string) => {
+  const [isPending, startTransition] = useTransition();
+  const DeleteCategory = (id: string) => {
     startTransition(() => {
-      DeleteHeroCarouselAction(id).then((data) => {
+      DeleteCategoryAction(id).then((data) => {
         if (data.success) {
           toast.success(data.success);
           router.refresh();
@@ -57,37 +48,26 @@ export const HeroCell: React.FC<HeroCellProps> = ({ data }) => {
       <DropdownMenuContent>
         <DropdownMenuLabel>Carousel Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          className="flex items-center gap-x-1 cursor-pointer"
-          onClick={onCopy}
-        >
-          <Copy className="h-4 w-4" />
-          <p>Carousel Link</p>
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Link
-            href={`/shop/${data.id}`}
-            className="flex items-center gap-x-1 cursor-pointer"
-          >
-            <Eye className="h-4 w-4" /> View Carousel
-          </Link>
-        </DropdownMenuItem>
         <DropdownMenuItem className="flex items-center gap-x-1 cursor-pointer">
           <Link
-            href={`/dashboard/hero/${data.id}`}
+            href={`/dashboard/categories/${data.id}`}
             className="flex items-center gap-x-1 cursor-pointer"
           >
-            <Edit3 className="h-4 w-4" /> Edit Carousel
+            <Edit className="h-4 w-4" /> Edit Category
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
           className="flex items-center gap-x-1 cursor-pointer"
           asChild
         >
-          <DeleteModal id={data.id} title={data.title} onDelete={HandleDelete}>
+          <DeleteModal
+            id={data.id}
+            title={data.title}
+            onDelete={DeleteCategory}
+          >
             <Button variant={"destructive"} disabled={isPending} size={"sm"}>
               <Trash className="mr-2 h-4 w-4" />
-              Delete Carousel
+              Delete Category
             </Button>
           </DeleteModal>
         </DropdownMenuItem>

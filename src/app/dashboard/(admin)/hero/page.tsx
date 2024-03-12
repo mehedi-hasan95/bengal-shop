@@ -10,6 +10,7 @@ const AdminHero = async () => {
   const heroData = data.map((item) => ({
     id: item.id,
     title: item.title,
+    image: item.image,
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
   return (

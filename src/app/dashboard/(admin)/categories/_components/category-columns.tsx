@@ -1,21 +1,22 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { HeroCell } from "./hero-cell";
+
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import Image from "next/image";
+import { CategoryCell } from "./category-cell";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type HeroCarousel = {
+export type CategoryTypes = {
   id: string;
   image: string;
   title: string;
-  createdAt: string;
+  url: string;
 };
 
-export const heroColumns: ColumnDef<HeroCarousel>[] = [
+export const categoryColumns: ColumnDef<CategoryTypes>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => {
@@ -25,14 +26,14 @@ export const heroColumns: ColumnDef<HeroCarousel>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0"
         >
-          Title
+          Category Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "url",
     header: ({ column }) => {
       return (
         <Button
@@ -40,7 +41,7 @@ export const heroColumns: ColumnDef<HeroCarousel>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           className="p-0"
         >
-          CreatedAt
+          Cat Url
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -62,6 +63,6 @@ export const heroColumns: ColumnDef<HeroCarousel>[] = [
   {
     id: "action",
     header: "Actions",
-    cell: ({ row }) => <HeroCell data={row.original} />,
+    cell: ({ row }) => <CategoryCell data={row.original} />,
   },
 ];

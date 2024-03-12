@@ -1,11 +1,13 @@
 "use client";
 
 import { CldUploadWidget } from "next-cloudinary";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ImagePlus, Trash } from "lucide-react";
+import { DeleteCloudinaryImagesAction } from "@/actions/admin-action/delete-cloudinary-image";
+import { toast } from "sonner";
 
 interface ImageUploadProps {
   disabled?: boolean;
@@ -20,6 +22,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   onRemove,
   value,
 }) => {
+  const [isPending, startTransition] = useTransition();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -34,6 +37,18 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     return null;
   }
 
+  const handleDelete = (image: string) => {
+    let imageName = image.substring(image.lastIndexOf("/") + 1);
+    imageName = imageName.slice(0, imageName.lastIndexOf("."));
+    const imagePath = "BengalShop/" + imageName;
+    onRemove(image);
+    startTransition(() => {
+      DeleteCloudinaryImagesAction(imagePath).then((data) => {
+        data?.success && toast.success(data?.success);
+        data?.error && toast.error(data?.error);
+      });
+    });
+  };
   return (
     <div>
       <div className="mb-4 flex items-center gap-4">
@@ -44,9 +59,9 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           >
             <div className="z-10 absolute top-2 right-2">
               <Button
-                disabled={disabled}
+                disabled={disabled || isPending}
                 type="button"
-                onClick={() => onRemove(url)}
+                onClick={() => handleDelete(url)}
                 variant="destructive"
                 size="sm"
               >
