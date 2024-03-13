@@ -18,7 +18,7 @@ export const CreateBrandAction = async (
     });
     revalidatePath("/");
     revalidatePath("/dashboard/brands");
-    return { success: "Brand Created syccessfully" };
+    return { success: "Brand Created Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
   }
@@ -41,7 +41,7 @@ export const UpdateBrandAction = async (
     });
     revalidatePath("/");
     revalidatePath("/dashboard/brands");
-    return { success: "Brand Updated syccessfully" };
+    return { success: "Brand Updated Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
   }
@@ -56,7 +56,7 @@ export const DeleteBrandAction = async (id: string) => {
     });
     revalidatePath("/");
     revalidatePath("/dashboard/brands");
-    return { success: "Brands Delete syccessfully" };
+    return { success: "Brands Delete Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
   }
