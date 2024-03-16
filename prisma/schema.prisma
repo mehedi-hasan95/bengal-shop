@@ -108,14 +108,15 @@ enum Offer {
 model Products {
   id        String      @id @default(cuid())
   title     String
+  desc      String
   image     Image[]
   basePrice Int?
   price     Int
   quantity  Int
   sale      Int         @default(0)
+  offer     Offer?
   ratings   Ratings[]
   addToCart AddToCart[]
-  offer     Offer?
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 }
