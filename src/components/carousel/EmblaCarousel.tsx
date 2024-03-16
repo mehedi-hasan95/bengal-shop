@@ -73,7 +73,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                         >
                             <Link
                                 href={item.url}
-                                className="flex flex-col items-center w-full bg-gray-200 "
+                                className="flex flex-col items-center w-full bg-gray-200 py-3 hover:bg-theme_green"
                             >
                                 <Image
                                     src={item.image}
