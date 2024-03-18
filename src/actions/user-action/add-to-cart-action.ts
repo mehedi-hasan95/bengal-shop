@@ -35,3 +35,18 @@ export const AddToCartAction = async (
     return { error: "Something went wrong" };
   }
 };
+
+// Individual User Cart
+
+export const GetIndividualCartAction = async () => {
+  const currentUser = await CurrentUser();
+  if (!currentUser) {
+    return null;
+  }
+  const data = await prismaDb.addToCart.findMany({
+    where: {
+      userId: currentUser.id,
+    },
+  });
+  return data;
+};

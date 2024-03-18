@@ -25,6 +25,7 @@ export const SingleProduct = ({ item }: SingleProductProps) => {
       setQuantity(quantity - 1);
     }
   };
+
   const onClick = (id: string) => {
     startTransition(() => {
       const values = {
@@ -76,6 +77,7 @@ export const SingleProduct = ({ item }: SingleProductProps) => {
             </Button>
           </div>
           {/* Add to cart  */}
+
           <Button
             disabled={isPending}
             onClick={() => onClick(item.id)}

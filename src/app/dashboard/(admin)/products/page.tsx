@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { ProductsTable } from "./_components/products-page";
 import { GetAllProductAction } from "@/actions/admin-action/admin-product-action";
 import { format } from "date-fns";
-import { ProductsTypes } from "./_components/products-columns";
 import { formatter } from "@/lib/utils";
 
 const ProductsPage = async () => {
@@ -12,7 +11,6 @@ const ProductsPage = async () => {
   const productData = data.map((item) => ({
     id: item.id,
     title: item.title,
-    // price: item.price,
     price: formatter.format(item.price),
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
