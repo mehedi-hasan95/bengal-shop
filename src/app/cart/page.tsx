@@ -11,7 +11,7 @@ const CartPage = async () => {
   }, 0);
 
   return (
-    <div className="container mx-auto px-6 grid grid-cols-3">
+    <div className="container mx-auto px-6 grid grid-cols-3 gap-10">
       <div className="col-span-2">
         {data?.map((item) => (
           <IndividualCart item={item as any} key={item.id} />

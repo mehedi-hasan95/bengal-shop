@@ -50,3 +50,43 @@ export const GetIndividualCartAction = async () => {
   });
   return data;
 };
+
+// Update Cart
+
+export const UpdateIndividualCartAction = async (
+  id: string,
+  quantity: number
+) => {
+  try {
+    const currentUser = await CurrentUser();
+    await prismaDb.addToCart.update({
+      where: {
+        id,
+        userId: currentUser?.id,
+      },
+      data: {
+        quantity,
+      },
+    });
+    revalidatePath("/cart");
+    return { success: "Cart updated" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};
+
+// Delete a perticuler cart
+export const DeleteIndividualCartAction = async (id: string) => {
+  try {
+    const currentUser = await CurrentUser();
+    await prismaDb.addToCart.delete({
+      where: {
+        id,
+        userId: currentUser?.id,
+      },
+    });
+    return { success: "Product delete successfully" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
+};

@@ -32,13 +32,13 @@ import {
 } from "@/actions/admin-action/admin-product-action";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Image, Products } from "@prisma/client";
+import { ProductImage, Products } from "@prisma/client";
 import { TitleLabel } from "@/components/common/title-label";
 import { DeleteModal } from "@/components/common/delete-modal";
 import { Loader, Trash } from "lucide-react";
 
 interface ProductsFormProps {
-  indititalData: (Products & { image: Image[] }) | null;
+  indititalData: (Products & { image: ProductImage[] }) | null;
 }
 export const ProductsForm = ({ indititalData }: ProductsFormProps) => {
   const [isPending, startTransition] = useTransition();
