@@ -9,13 +9,14 @@ import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import { ProductModal } from "./_components/product-modal";
 
 interface SingleProductProps {
   item: Products & { image: ProductImage[] };
 }
 export const SingleProduct = ({ item }: SingleProductProps) => {
   const [isPending, startTransition] = useTransition();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number>(1);
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
@@ -26,17 +27,17 @@ export const SingleProduct = ({ item }: SingleProductProps) => {
     }
   };
 
-  const onClick = (id: string) => {
+  const addCart = (id: string) => {
     startTransition(() => {
       const values = {
         productId: id,
         quantity: quantity,
         price: item.price,
-        offer: item.offer,
+        offer: item.offer || undefined,
         title: item.title,
         image: item.image[0].url,
       };
-      AddToCartAction(values as any).then((data) => {
+      AddToCartAction(values).then((data) => {
         if (data.success) {
           toast.success(data.success);
         }
@@ -80,26 +81,52 @@ export const SingleProduct = ({ item }: SingleProductProps) => {
 
           <Button
             disabled={isPending}
-            onClick={() => onClick(item.id)}
+            onClick={() => addCart(item.id)}
             variant={"ghost"}
             className="bg-theme border-none outline-none text-white hover:text-black"
           >
             Add to Cart
           </Button>
         </div>
+
+        {/* Modal  */}
+        <div className="absolute bottom-3 z-40 w-full opacity-0 group-hover:opacity-100 group-hover:bg-theme">
+          <ProductModal
+            products={item}
+            images={item.image}
+            onCart={addCart}
+            quantity={quantity}
+            setQuantity={setQuantity as any}
+          >
+            <Button
+              className="w-full hover:bg-theme_green text-white"
+              variant={"ghost"}
+            >
+              View Details
+            </Button>
+          </ProductModal>
+        </div>
       </div>
       <div className="absolute top-3 right-2 z-40">
-        <Badge>{((item?.basePrice as any) / item.price).toFixed(2)} %</Badge>
+        <Badge>
+          -
+          {(
+            (((item?.basePrice as number) - item.price) /
+              (item?.basePrice as number)) *
+            100
+          ).toFixed(0)}{" "}
+          %
+        </Badge>
       </div>
       <div className="text-center">
         <p>Rattings</p>
         <h4 className="text-xl font-medium">{item.title}</h4>
         <div className="flex gap-2 items-center justify-center">
-          <h4 className="text-lg font-medium">
-            {formatter.format(item.price)}
-          </h4>{" "}
           <h4 className="text-lg font-medium line-through">
             {formatter.format(item.basePrice as number)}
+          </h4>
+          <h4 className="text-lg font-medium">
+            {formatter.format(item.price)}
           </h4>
         </div>
       </div>

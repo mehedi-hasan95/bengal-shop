@@ -29,7 +29,7 @@ export const AddToCartAction = async (
       },
     });
     revalidatePath("/cart");
-    return { success: "Brand Created Successfully" };
+    return { success: "Added to Cart Successfully" };
   } catch (error) {
     console.log(error);
     return { error: "Something went wrong" };
