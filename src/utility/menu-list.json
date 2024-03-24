@@ -11,11 +11,16 @@
   },
   {
     "id": 3,
+    "name": "Categories",
+    "url": "/categories"
+  },
+  {
+    "id": 4,
     "name": "Blog",
     "url": "/blog"
   },
   {
-    "id": 4,
+    "id": 5,
     "name": "Contact",
     "url": "/contact"
   }

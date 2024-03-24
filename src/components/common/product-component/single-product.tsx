@@ -9,7 +9,7 @@ import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { ProductModal } from "./_components/product-modal";
+import { ProductModal } from "./product-modal";
 
 interface SingleProductProps {
   item: Products & { image: ProductImage[] };

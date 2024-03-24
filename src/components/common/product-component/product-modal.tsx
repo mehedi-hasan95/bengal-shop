@@ -8,14 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { cn, formatter } from "@/lib/utils";
+import { formatter } from "@/lib/utils";
 import { ProductImage, Products } from "@prisma/client";
 import { Eye, Minus, Plus } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import { ImageTabs } from "./image-tabs";
 
 interface ProductModalProps {
   products: Products;
@@ -25,6 +23,7 @@ interface ProductModalProps {
   setQuantity?: any;
   images: ProductImage[];
 }
+
 export const ProductModal = ({
   quantity,
   setQuantity,
@@ -48,40 +47,7 @@ export const ProductModal = ({
       <DialogContent className="md:min-w-max">
         <div className="grid lg:grid-cols-2 gap-8">
           <div>
-            <Tabs defaultValue={images[0].url} className="w-[400px]">
-              {/* Full Image  */}
-              {images.map((item) => (
-                <TabsContent key={item.id} value={item.url}>
-                  <Image
-                    src={item.url}
-                    alt={products.title}
-                    height={500}
-                    width={500}
-                  />
-                </TabsContent>
-              ))}
-              {/* end  */}
-              {/* TabList  */}
-              <TabsList className={cn("mt-8 bg-inherit")}>
-                {images.map((item) => (
-                  <TabsTrigger
-                    key={item.id}
-                    value={item.url}
-                    className={cn(
-                      "data-[state=active]:border-green-700 data-[state=active]:border-2 data-[state=active]:box-border"
-                    )}
-                  >
-                    <Image
-                      src={item.url}
-                      alt={products.title}
-                      height={500}
-                      width={500}
-                      className="h-10 w-10"
-                    />
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
+            <ImageTabs images={images} />
           </div>
           <DialogHeader>
             <p className="pt-5 flex gap-10 pb-5">
