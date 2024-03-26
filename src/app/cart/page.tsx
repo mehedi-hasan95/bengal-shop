@@ -3,6 +3,7 @@ import { IndividualCart } from "./_components/individual-cart";
 import { TitleLabel } from "@/components/common/title-label";
 import { Button } from "@/components/ui/button";
 import { formatter } from "@/lib/utils";
+import { Empty } from "@/components/common/empty";
 
 const CartPage = async () => {
   const data = await GetIndividualCartAction();
@@ -13,6 +14,7 @@ const CartPage = async () => {
   return (
     <div className="container mx-auto px-6 grid grid-cols-3 gap-10">
       <div className="col-span-2">
+        {!data?.length && <Empty title="No product in Cart" />}
         {data?.map((item) => (
           <IndividualCart item={item as any} key={item.id} />
         ))}
@@ -25,7 +27,7 @@ const CartPage = async () => {
             {formatter.format(totalPrice?.toFixed(2) as any)}
           </span>
         </h2>
-        <Button>Checkout</Button>
+        <Button disabled={(totalPrice as number) < 1}>Checkout</Button>
       </div>
     </div>
   );

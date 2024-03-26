@@ -27,7 +27,7 @@ export const AddToWishListAction = async (
       },
     });
     revalidatePath("/wishlist");
-    return { success: "Added to Cart Successfully" };
+    return { success: "Added to Wishlist Successfully" };
   } catch (error) {
     console.log(error);
     return { error: "Something went wrong" };
@@ -45,4 +45,23 @@ export const GetAllWishlistAction = async () => {
     },
   });
   return data;
+};
+
+export const DeleteWishListAction = async (id: string) => {
+  try {
+    const currentUser = await CurrentUser();
+    if (!currentUser) {
+      return { error: "Please login first" };
+    }
+    await prismaDb.addToWishList.deleteMany({
+      where: {
+        productId: id,
+        userId: currentUser.id,
+      },
+    });
+    revalidatePath("/wishlist");
+    return { success: "Remove from Wishlist Successfully" };
+  } catch (error) {
+    return { error: "Something went wrong" };
+  }
 };

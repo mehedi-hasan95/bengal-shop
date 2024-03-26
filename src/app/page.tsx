@@ -2,8 +2,8 @@ import { GetAllBrandAction } from "@/actions/admin-action/admin-brand-action";
 import { GetAllCategoryAction } from "@/actions/admin-action/admin-category-action";
 import { GetAllProductAction } from "@/actions/admin-action/admin-product-action";
 import { GetAllHeroCarouselAction } from "@/actions/admin-action/hero-carousel-action";
+import { GetAllWishlistAction } from "@/actions/user-action/add-to-wishlist-action";
 import { EmblaPage } from "@/components/carousel/emabl-page";
-import { Footer } from "@/components/common/footer/footer";
 import { SingleProduct } from "@/components/common/product-component/single-product";
 import { HomeCarousel } from "@/components/home-page/home-carousel";
 import { PopulerBrands } from "@/components/home-page/populer-brands";
@@ -14,6 +14,7 @@ export default async function Home() {
   const cat = await GetAllCategoryAction();
   const product = await GetAllProductAction();
   const brands = await GetAllBrandAction();
+  const wish = await GetAllWishlistAction();
   return (
     <main className="">
       <HomeCarousel data={data} />
@@ -25,7 +26,7 @@ export default async function Home() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {product.map((item) => (
-            <SingleProduct key={item.id} item={item} />
+            <SingleProduct key={item.id} item={item} wish={wish} />
           ))}
         </div>
       </div>
@@ -35,9 +36,6 @@ export default async function Home() {
           <Separator className="my-2" />
         </h2>
         <PopulerBrands brands={brands} />
-      </div>
-      <div className="pt-10">
-        <Footer />
       </div>
     </main>
   );

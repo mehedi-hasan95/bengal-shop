@@ -1,10 +1,11 @@
 import { GetAllProductAction } from "@/actions/admin-action/admin-product-action";
+import { GetAllWishlistAction } from "@/actions/user-action/add-to-wishlist-action";
 import { SingleProduct } from "@/components/common/product-component/single-product";
 import Image from "next/image";
 
 const ShopPage = async () => {
   const data = await GetAllProductAction();
-
+  const wish = await GetAllWishlistAction();
   return (
     <div className="container mx-auto px-6">
       <div className="relative">
@@ -21,7 +22,7 @@ const ShopPage = async () => {
       </div>
       <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-5 py-10">
         {data.map((item) => (
-          <SingleProduct key={item.id} item={item} />
+          <SingleProduct key={item.id} item={item} wish={wish} />
         ))}
       </div>
     </div>

@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/dialog";
 
 import { formatter } from "@/lib/utils";
-import { ProductImage, Products } from "@prisma/client";
+import { AddToWishList, ProductImage, Products } from "@prisma/client";
 import { Eye, Minus, Plus } from "lucide-react";
 import Link from "next/link";
 import { ImageTabs } from "./image-tabs";
-import { WishList } from "../wishlist";
+import { WishListButton } from "../wishlist-button";
 
 interface ProductModalProps {
   products: Products;
@@ -23,6 +23,7 @@ interface ProductModalProps {
   quantity?: any;
   setQuantity?: any;
   images: ProductImage[];
+  wish: AddToWishList[] | null;
 }
 
 export const ProductModal = ({
@@ -32,6 +33,7 @@ export const ProductModal = ({
   onCart,
   images,
   children,
+  wish,
 }: ProductModalProps) => {
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -95,7 +97,7 @@ export const ProductModal = ({
                 Add to Cart
               </Button>
               <div className="py-5">
-                <WishList item={products as any} />
+                <WishListButton item={products as any} wish={wish} />
               </div>
               <div className="mt-5">
                 <Link href={`/shop/${products.id}`}>
