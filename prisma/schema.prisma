@@ -41,16 +41,17 @@ enum userRole {
 }
 
 model User {
-  id            String      @id @default(cuid())
+  id            String          @id @default(cuid())
   name          String?
-  email         String?     @unique
+  email         String?         @unique
   password      String?
   emailVerified DateTime?
   image         String?
-  role          userRole    @default(USER)
+  role          userRole        @default(USER)
   accounts      Account[]
   ratings       Ratings[]
   addToCart     AddToCart[]
+  addToWishList AddToWishList[]
 }
 
 model VerificationToken {
@@ -83,21 +84,23 @@ model HeroCarousel {
 }
 
 model Category {
-  id        String   @id @default(cuid())
-  title     String   @unique
-  url       String   @unique
+  id        String     @id @default(cuid())
+  title     String     @unique
+  url       String     @unique
   image     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  products  Products[]
 }
 
 model Brand {
-  id        String   @id @default(cuid())
-  title     String   @unique
-  url       String   @unique
+  id        String     @id @default(cuid())
+  title     String     @unique
+  url       String     @unique
   image     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  products  Products[]
 }
 
 enum Offer {
@@ -106,19 +109,27 @@ enum Offer {
 }
 
 model Products {
-  id        String         @id @default(cuid())
-  title     String
-  desc      String
-  image     ProductImage[]
-  basePrice Int?
-  price     Int
-  quantity  Int
-  sale      Int            @default(0)
-  offer     Offer?
-  ratings   Ratings[]
-  addToCart AddToCart[]
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  id            String          @id @default(cuid())
+  title         String
+  desc          String
+  image         ProductImage[]
+  basePrice     Int?
+  price         Int
+  quantity      Int
+  sale          Int             @default(0)
+  offer         Offer?
+  ratings       Ratings[]
+  addToCart     AddToCart[]
+  categoryId    String
+  brandId       String
+  category      Category        @relation(fields: [categoryId], references: [url], onDelete: Cascade)
+  brand         Brand           @relation(fields: [brandId], references: [url], onDelete: Cascade)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  addToWishList AddToWishList[]
+
+  @@index([categoryId])
+  @@index([brandId])
 }
 
 model ProductImage {
@@ -153,22 +164,38 @@ enum OrderStatus {
 }
 
 model AddToCart {
-  id         String      @id @default(uuid())
-  title      String
-  image      String
-  quantity   Int
-  productId  String
-  product    Products    @relation(fields: [productId], references: [id], onDelete: Cascade)
-  userId     String
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  offer      Offer?
-  price      Int
-  totalPrice Int
-  status     OrderStatus @default(IN_PROGRESS)
-  paid       Boolean     @default(false)
-  paymentId  String?
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id        String      @id @default(uuid())
+  title     String
+  image     String
+  quantity  Int
+  productId String
+  product   Products    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  offer     Offer?
+  price     Int
+  status    OrderStatus @default(IN_PROGRESS)
+  paid      Boolean     @default(false)
+  paymentId String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([productId])
+  @@index([userId])
+}
+
+model AddToWishList {
+  id        String   @id @default(uuid())
+  title     String
+  image     String
+  productId String
+  price     Int
+  product   Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  offer     Offer?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([productId])
   @@index([userId])

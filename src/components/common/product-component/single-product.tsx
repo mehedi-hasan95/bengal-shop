@@ -5,11 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatter } from "@/lib/utils";
 import { ProductImage, Products } from "@prisma/client";
-import { Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { ProductModal } from "./product-modal";
+import { AddToCartButton } from "../add-to-cart-button";
 
 interface SingleProductProps {
   item: Products & { image: ProductImage[] };
@@ -17,15 +17,6 @@ interface SingleProductProps {
 export const SingleProduct = ({ item }: SingleProductProps) => {
   const [isPending, startTransition] = useTransition();
   const [quantity, setQuantity] = useState<number>(1);
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
 
   const addCart = (id: string) => {
     startTransition(() => {
@@ -58,35 +49,7 @@ export const SingleProduct = ({ item }: SingleProductProps) => {
         />
 
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 opacity-0 hover:opacity-100 flex justify-center items-center flex-col">
-          <div className="flex gap-2 pb-5 items-center">
-            <Button
-              variant={"ghost"}
-              onClick={decreaseQuantity}
-              className="bg-white p-0 h-8 w-8 rounded-full"
-            >
-              <Minus className="w-4" />
-            </Button>
-            <Badge variant="outline" className="bg-white text-xl font-bold">
-              {quantity}
-            </Badge>
-            <Button
-              variant={"ghost"}
-              onClick={increaseQuantity}
-              className="bg-white p-0 h-8 w-8 rounded-full"
-            >
-              <Plus className="w-4" />
-            </Button>
-          </div>
-          {/* Add to cart  */}
-
-          <Button
-            disabled={isPending}
-            onClick={() => addCart(item.id)}
-            variant={"ghost"}
-            className="bg-theme border-none outline-none text-white hover:text-black"
-          >
-            Add to Cart
-          </Button>
+          <AddToCartButton item={item} />
         </div>
 
         {/* Modal  */}

@@ -70,3 +70,38 @@ export const GetAllCategoryAction = async () => {
   });
   return data;
 };
+
+export const GetCategoryProductCountAction = async () => {
+  const data = await prismaDb.category.findMany({
+    include: {
+      _count: {
+        select: {
+          products: true,
+        },
+      },
+    },
+    orderBy: {
+      title: "asc",
+    },
+  });
+  return data;
+};
+
+export const GetSingleCategoryProducts = async (slug: string) => {
+  try {
+    const data = await prismaDb.products.findMany({
+      where: {
+        categoryId: slug,
+      },
+      include: {
+        image: true,
+      },
+      orderBy: {
+        title: "asc",
+      },
+    });
+    return data;
+  } catch (error) {
+    return null;
+  }
+};

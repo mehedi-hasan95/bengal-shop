@@ -141,9 +141,9 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
           <FormInput
             disabled={isPending}
             form={form}
-            label="How much save"
+            label="Short Title"
             name="save"
-            placeholder="How much save"
+            placeholder="Short Title"
           />
           {/* Image field  */}
           <FormField

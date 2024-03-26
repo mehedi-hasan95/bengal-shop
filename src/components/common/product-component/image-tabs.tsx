@@ -1,4 +1,3 @@
-import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { ProductImage } from "@prisma/client";
@@ -8,11 +7,17 @@ interface ImageTabsProops {
 }
 export const ImageTabs = ({ images }: ImageTabsProops) => {
   return (
-    <Tabs defaultValue={images[0].url} className="w-[400px]">
+    <Tabs defaultValue={images[0]?.url} className="w-[400px]">
       {/* Full Image  */}
       {images.map((item) => (
         <TabsContent key={item.id} value={item.url}>
-          <Image src={item.url} alt="" height={500} width={500} />
+          <Image
+            src={item.url}
+            alt=""
+            height={500}
+            width={500}
+            className="w-full"
+          />
         </TabsContent>
       ))}
       {/* end  */}

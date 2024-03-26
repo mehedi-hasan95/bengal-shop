@@ -10,8 +10,8 @@ import Image from "next/image";
 // You can use a Zod schema here if you want.
 export type HeroCarousel = {
   id: string;
-  image: string;
   title: string;
+  image: string;
   createdAt: string;
 };
 

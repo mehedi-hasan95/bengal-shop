@@ -14,6 +14,7 @@ import { ProductImage, Products } from "@prisma/client";
 import { Eye, Minus, Plus } from "lucide-react";
 import Link from "next/link";
 import { ImageTabs } from "./image-tabs";
+import { WishList } from "../wishlist";
 
 interface ProductModalProps {
   products: Products;
@@ -93,6 +94,9 @@ export const ProductModal = ({
               >
                 Add to Cart
               </Button>
+              <div className="py-5">
+                <WishList item={products as any} />
+              </div>
               <div className="mt-5">
                 <Link href={`/shop/${products.id}`}>
                   <Button

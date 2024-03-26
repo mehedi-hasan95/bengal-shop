@@ -17,7 +17,7 @@ export const HeroSchema = z.object({
     message: "Link is required",
   }),
   save: z.string().min(1, {
-    message: "Enter Discount",
+    message: "Short Title",
   }),
   image: z.string().min(2, {
     message: "Image is required",
@@ -68,5 +68,7 @@ export const ProductSchema = z.object({
     message: "Product quantity is required",
   }),
   offer: z.enum([Offer.BUY_ONE_GET_ONE, Offer.SPECIAL_OFFERS]).optional(),
+  categoryId: z.string(),
+  brandId: z.string(),
   image: z.object({ url: z.string() }).array(),
 });

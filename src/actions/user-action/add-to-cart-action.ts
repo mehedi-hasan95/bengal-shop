@@ -10,12 +10,13 @@ export const AddToCartAction = async (
 ) => {
   try {
     const currentUser = await CurrentUser();
-
+    if (!currentUser) {
+      return { error: "Please login first" };
+    }
     const validateField = AddToCartSchema.safeParse(values);
     if (!validateField.success) return { error: "Something went wrong" };
     const { price, productId, quantity, offer, title, image } =
       validateField.data;
-    const totalPrice = price * quantity;
     await prismaDb.addToCart.create({
       data: {
         title,
@@ -23,7 +24,6 @@ export const AddToCartAction = async (
         productId,
         quantity,
         price,
-        totalPrice: totalPrice,
         offer,
         userId: currentUser?.id as string,
       },

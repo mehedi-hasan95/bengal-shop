@@ -27,11 +27,13 @@ export const CategoryMenu = async () => {
         <SheetHeader>
           <SheetTitle>Categories</SheetTitle>
           {data.map((item) => (
-            <SheetClose asChild key={item.id}>
-              <SheetDescription className="bg-gray-100 py-2 px-2 hover:bg-theme_green cursor-pointer">
-                <Link href={`/categories/${item.url}`}>{item.title}</Link>
-              </SheetDescription>
-            </SheetClose>
+            <Link href={`/categories/${item.url}`} key={item.id}>
+              <SheetClose asChild>
+                <SheetDescription className="bg-gray-100 py-2 px-2 hover:bg-theme_green cursor-pointer">
+                  {item.title}
+                </SheetDescription>
+              </SheetClose>
+            </Link>
           ))}
         </SheetHeader>
       </SheetContent>

@@ -36,7 +36,7 @@ export const HomeCarousel = ({ data }: HomeCarouselProps) => {
             >
               <div className="col-span-3">
                 <h3 className="text-xl md:text-2xl lg:text-3xl text-theme pb-5">
-                  Save up to {item.save}% off
+                  {item.save}
                 </h3>
                 <h2 className="text-2xl md:text-4xl lg:text-7xl font-bold">
                   {item.title}

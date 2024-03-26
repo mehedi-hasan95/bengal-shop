@@ -23,7 +23,7 @@ export default async function Home() {
           Deals of the Week
           <Separator />
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {product.map((item) => (
             <SingleProduct key={item.id} item={item} />
           ))}

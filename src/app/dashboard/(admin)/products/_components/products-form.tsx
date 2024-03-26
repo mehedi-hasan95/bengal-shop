@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -32,15 +31,21 @@ import {
 } from "@/actions/admin-action/admin-product-action";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { ProductImage, Products } from "@prisma/client";
+import { Brand, Category, ProductImage, Products } from "@prisma/client";
 import { TitleLabel } from "@/components/common/title-label";
 import { DeleteModal } from "@/components/common/delete-modal";
 import { Loader, Trash } from "lucide-react";
 
 interface ProductsFormProps {
   indititalData: (Products & { image: ProductImage[] }) | null;
+  categories: Category[];
+  brands: Brand[];
 }
-export const ProductsForm = ({ indititalData }: ProductsFormProps) => {
+export const ProductsForm = ({
+  indititalData,
+  categories,
+  brands,
+}: ProductsFormProps) => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const title = indititalData ? "Update Product" : "Create Product";
@@ -56,6 +61,8 @@ export const ProductsForm = ({ indititalData }: ProductsFormProps) => {
       price: indititalData?.price || undefined,
       quantity: indititalData?.quantity || undefined,
       offer: indititalData?.offer || undefined,
+      categoryId: indititalData?.categoryId || undefined,
+      brandId: indititalData?.brandId || undefined,
       image: indititalData?.image || [],
     },
   });
@@ -97,6 +104,7 @@ export const ProductsForm = ({ indititalData }: ProductsFormProps) => {
       });
     });
   };
+
   return (
     <div className="py-5">
       <div className="flex justify-between items-center py-5">
@@ -196,6 +204,65 @@ export const ProductsForm = ({ indititalData }: ProductsFormProps) => {
               </FormItem>
             )}
           />
+          <div className="grid grid-cols-2 gap-3">
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Select Category</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    disabled={isPending}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Category" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {categories.map((item) => (
+                        <SelectItem key={item.id} value={item.url}>
+                          {item.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="brandId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Select Brand</FormLabel>
+                  <Select
+                    disabled={isPending}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a Brand" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {brands.map((item) => (
+                        <SelectItem key={item.id} value={item.url}>
+                          {item.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
           {/* Cloudinary  */}
           <FormField
             control={form.control}
@@ -220,6 +287,7 @@ export const ProductsForm = ({ indititalData }: ProductsFormProps) => {
               </FormItem>
             )}
           />
+
           {isPending ? (
             <Button disabled>
               {afterAction}

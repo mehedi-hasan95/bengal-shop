@@ -19,7 +19,7 @@ const ShopPage = async () => {
           Up to 30% Discount on Selected Items
         </div>
       </div>
-      <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-5 py-10">
+      <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-5 py-10">
         {data.map((item) => (
           <SingleProduct key={item.id} item={item} />
         ))}

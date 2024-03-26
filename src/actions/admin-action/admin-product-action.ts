@@ -14,8 +14,17 @@ export const CreateProductAction = async (
     if (currentUser !== "ADMIN") return { error: "Unauthorize user" };
     const validateField = ProductSchema.safeParse(values);
     if (!validateField.success) return { error: "Something went wrong" };
-    const { title, desc, basePrice, price, quantity, offer, image } =
-      validateField.data;
+    const {
+      title,
+      desc,
+      basePrice,
+      price,
+      quantity,
+      offer,
+      image,
+      categoryId,
+      brandId,
+    } = validateField.data;
     await prismaDb.products.create({
       data: {
         title,
@@ -24,6 +33,8 @@ export const CreateProductAction = async (
         price,
         quantity,
         offer,
+        categoryId,
+        brandId,
         image: {
           createMany: {
             data: [...image.map((image: { url: string }) => image)],
@@ -48,8 +59,17 @@ export const UpdateProductAction = async (
     if (currentUser !== "ADMIN") return { error: "Unauthorize user" };
     const validateField = ProductSchema.safeParse(values);
     if (!validateField.success) return { error: "Something went wrong" };
-    const { title, desc, basePrice, price, quantity, offer, image } =
-      validateField.data;
+    const {
+      title,
+      desc,
+      basePrice,
+      price,
+      quantity,
+      offer,
+      image,
+      categoryId,
+      brandId,
+    } = validateField.data;
     await prismaDb.products.update({
       where: { id },
       data: {
@@ -67,6 +87,8 @@ export const UpdateProductAction = async (
         price,
         quantity,
         offer,
+        categoryId,
+        brandId,
         image: {
           createMany: {
             data: [...image.map((image: { url: string }) => image)],
@@ -104,6 +126,28 @@ export const GetAllProductAction = async () => {
     },
     include: {
       image: true,
+    },
+  });
+  return data;
+};
+
+export const GetSingleProductAction = async (id: string) => {
+  const data = await prismaDb.products.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      image: true,
+      category: {
+        select: {
+          title: true,
+        },
+      },
+      brand: {
+        select: {
+          title: true,
+        },
+      },
     },
   });
   return data;
