@@ -1,4 +1,4 @@
-import { GetSingleCategoryProducts } from "@/actions/admin-action/admin-category-action";
+import { GetSingleBrandProducts } from "@/actions/admin-action/admin-brand-action";
 import { GetAllWishlistAction } from "@/actions/user-action/add-to-wishlist-action";
 import NotFound from "@/app/not-found";
 import { SingleProduct } from "@/components/common/product-component/single-product";
@@ -7,14 +7,15 @@ import { prismaDb } from "@/lib/prismaDb";
 import Link from "next/link";
 
 const CategorySlug = async ({ params }: { params: { slug: string } }) => {
-  const cat = await prismaDb.category.findUnique({
+  const brand = await prismaDb.brand.findUnique({
     where: {
       url: params.slug,
     },
   });
-  const data = await GetSingleCategoryProducts(params.slug);
+  const data = await GetSingleBrandProducts(params.slug);
+
   const wish = await GetAllWishlistAction();
-  if (!cat) {
+  if (!brand) {
     return <NotFound />;
   }
   if (!data?.length) {
@@ -23,7 +24,7 @@ const CategorySlug = async ({ params }: { params: { slug: string } }) => {
         <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
           <div className="max-w-md text-center">
             <p className="text-2xl font-semibold md:text-3xl">
-              Sorry, this category have no product.
+              Sorry, this Brand have no product.
             </p>
             <p className="mt-4 mb-8 dark:text-gray-600">
               But dont worry, you can find plenty of other things on our

@@ -16,11 +16,16 @@
   },
   {
     "id": 4,
+    "name": "Brands",
+    "url": "/brands"
+  },
+  {
+    "id": 5,
     "name": "Blog",
     "url": "/blog"
   },
   {
-    "id": 5,
+    "id": 6,
     "name": "Contact",
     "url": "/contact"
   }

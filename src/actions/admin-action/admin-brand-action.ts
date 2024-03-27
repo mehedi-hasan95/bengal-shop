@@ -70,3 +70,39 @@ export const GetAllBrandAction = async () => {
   });
   return data;
 };
+
+// Find brands
+export const GetBrandProductCountAction = async () => {
+  const data = await prismaDb.brand.findMany({
+    include: {
+      _count: {
+        select: {
+          products: true,
+        },
+      },
+    },
+    orderBy: {
+      title: "asc",
+    },
+  });
+  return data;
+};
+
+export const GetSingleBrandProducts = async (slug: string) => {
+  try {
+    const data = await prismaDb.products.findMany({
+      where: {
+        brandId: slug,
+      },
+      include: {
+        image: true,
+      },
+      orderBy: {
+        title: "asc",
+      },
+    });
+    return data;
+  } catch (error) {
+    return null;
+  }
+};

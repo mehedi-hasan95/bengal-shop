@@ -1,7 +1,7 @@
 import { GetAllBrandAction } from "@/actions/admin-action/admin-brand-action";
 import { GetAllCategoryAction } from "@/actions/admin-action/admin-category-action";
-import { GetAllProductAction } from "@/actions/admin-action/admin-product-action";
 import { GetAllHeroCarouselAction } from "@/actions/admin-action/hero-carousel-action";
+import { BuyGetOfferAction } from "@/actions/admin-action/offer-action";
 import { GetAllWishlistAction } from "@/actions/user-action/add-to-wishlist-action";
 import { EmblaPage } from "@/components/carousel/emabl-page";
 import { SingleProduct } from "@/components/common/product-component/single-product";
@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 export default async function Home() {
   const data = await GetAllHeroCarouselAction();
   const cat = await GetAllCategoryAction();
-  const product = await GetAllProductAction();
+  const product = await BuyGetOfferAction();
   const brands = await GetAllBrandAction();
   const wish = await GetAllWishlistAction();
   return (

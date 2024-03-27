@@ -1,11 +1,9 @@
 import Link from "next/link";
 
-export const SpeticalOffer = () => {
+export const SpecialOffer = () => {
   return (
-    <div>
-      <Link href="#" className="text-theme_orange font-semibold">
-        % Special Offers!
-      </Link>
-    </div>
+    <Link href="/special-offer" className="text-theme_orange font-semibold">
+      % Special Offers!
+    </Link>
   );
 };
