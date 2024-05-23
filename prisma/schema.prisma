@@ -222,3 +222,11 @@ model Order {
   @@index([productId])
   @@index([userId])
 }
+
+model StripeCustomer {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  stripeCustomerId String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

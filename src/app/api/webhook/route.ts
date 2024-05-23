@@ -22,23 +22,25 @@ export const POST = async (req: NextRequest) => {
     if (event.type === "checkout.session.completed") {
       const currentUser = await CurrentUser();
       const orderData = JSON.parse(session?.metadata?.ids as string);
-      console.log(orderData);
+      const ids = orderData.map((order: any) => order.id);
       await prismaDb.order.updateMany({
         where: {
-          id: orderData?.id,
+          id: { in: ids },
           userId: currentUser?.id,
         },
         data: {
           paid: true,
+          paymentId: session.payment_intent as string,
         },
       });
       // Update add to product data
       const orderItems = await prismaDb.order.findMany({
         where: {
-          id: orderData?.id,
+          id: { in: ids },
           userId: currentUser?.id,
         },
       });
+      console.log(orderItems);
       for (const item of orderItems) {
         await prismaDb.products.update({
           where: {
