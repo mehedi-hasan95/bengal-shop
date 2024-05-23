@@ -19,6 +19,7 @@ export const authRoutes = ["/signin", "/register", "/forgot-password"];
  * @type {string}
  */
 export const apiAuthPrefix = "/api/auth";
+export const apiWebhookPrefix = "/api/webhook";
 
 /**
  * The default redirect path after logging in

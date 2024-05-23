@@ -52,6 +52,7 @@ model User {
   ratings       Ratings[]
   addToCart     AddToCart[]
   addToWishList AddToWishList[]
+  order         Order[]
 }
 
 model VerificationToken {
@@ -127,6 +128,7 @@ model Products {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
   addToWishList AddToWishList[]
+  order         Order[]
 
   @@index([categoryId])
   @@index([brandId])
@@ -157,28 +159,19 @@ model Ratings {
   @@index([userId])
 }
 
-enum OrderStatus {
-  IN_PROGRESS
-  ON_THE_WAY
-  DELIVERED
-}
-
 model AddToCart {
-  id        String      @id @default(uuid())
+  id        String   @id @default(uuid())
   title     String
   image     String
   quantity  Int
   productId String
-  product   Products    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Products @relation(fields: [productId], references: [id], onDelete: Cascade)
   userId    String
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   offer     Offer?
   price     Int
-  status    OrderStatus @default(IN_PROGRESS)
-  paid      Boolean     @default(false)
-  paymentId String?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([productId])
   @@index([userId])
@@ -196,6 +189,35 @@ model AddToWishList {
   offer     Offer?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([userId])
+}
+
+enum OrderStatus {
+  IN_PROGRESS
+  ON_THE_WAY
+  DELIVERED
+}
+
+model Order {
+  id        String      @id @default(uuid())
+  title     String
+  img       String?
+  cartId    String      @unique
+  quantity  Int
+  productId String
+  userId    String
+  offer     Offer?
+  price     Int
+  paymentId String?
+  expires   DateTime
+  paid      Boolean     @default(false)
+  product   Products    @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    OrderStatus @default(IN_PROGRESS)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
   @@index([productId])
   @@index([userId])

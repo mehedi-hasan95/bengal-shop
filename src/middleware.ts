@@ -7,6 +7,7 @@ import {
   authRoutes,
   apiAuthPrefix,
   DEFAULT_LOGIN_REDIRECT,
+  apiWebhookPrefix,
 } from "@/routes";
 
 // @ts-ignore
@@ -15,11 +16,16 @@ export default auth((req) => {
   const isLogIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isApiWebhookRoute = nextUrl.pathname.startsWith(apiWebhookPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   //   User allow to login or register API access
   if (isApiAuthRoute) {
+    return null;
+  }
+  //   User allow to go Stripe
+  if (isApiWebhookRoute) {
     return null;
   }
 
