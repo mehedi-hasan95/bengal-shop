@@ -1,6 +1,6 @@
 "use server";
 
-import { CurrentUserRole } from "@/lib/current-user";
+import { CurrentUser, CurrentUserRole } from "@/lib/current-user";
 import { prismaDb } from "@/lib/prismaDb";
 import { ProductSchema } from "@/schema/admin-schema/admin-schema";
 import { revalidatePath } from "next/cache";
@@ -10,6 +10,7 @@ export const CreateProductAction = async (
   values: z.infer<typeof ProductSchema>
 ) => {
   try {
+    const ownerId = await CurrentUser();
     const currentUser = await CurrentUserRole();
     if (currentUser !== "ADMIN") return { error: "Unauthorize user" };
     const validateField = ProductSchema.safeParse(values);
@@ -35,6 +36,7 @@ export const CreateProductAction = async (
         offer,
         categoryId,
         brandId,
+        ownerId: ownerId?.id as string,
         image: {
           createMany: {
             data: [...image.map((image: { url: string }) => image)],
@@ -55,6 +57,7 @@ export const UpdateProductAction = async (
   id: string
 ) => {
   try {
+    const ownerId = await CurrentUser();
     const currentUser = await CurrentUserRole();
     if (currentUser !== "ADMIN") return { error: "Unauthorize user" };
     const validateField = ProductSchema.safeParse(values);
@@ -71,7 +74,7 @@ export const UpdateProductAction = async (
       brandId,
     } = validateField.data;
     await prismaDb.products.update({
-      where: { id },
+      where: { id, ownerId: ownerId?.id },
       data: {
         image: {
           deleteMany: {},
@@ -106,10 +109,11 @@ export const UpdateProductAction = async (
 
 export const DeleteProductAction = async (id: string) => {
   try {
+    const ownerId = await CurrentUser();
     const currentUser = await CurrentUserRole();
     if (currentUser !== "ADMIN") return { error: "Unauthorize user" };
     await prismaDb.products.delete({
-      where: { id },
+      where: { id, ownerId: ownerId?.id },
     });
     revalidatePath("/");
     revalidatePath("/dashboard/products");

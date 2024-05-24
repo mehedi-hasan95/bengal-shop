@@ -123,6 +123,7 @@ model Products {
   addToCart     AddToCart[]
   categoryId    String
   brandId       String
+  ownerId       String
   category      Category        @relation(fields: [categoryId], references: [url], onDelete: Cascade)
   brand         Brand           @relation(fields: [brandId], references: [url], onDelete: Cascade)
   createdAt     DateTime        @default(now())

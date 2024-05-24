@@ -1,10 +1,11 @@
-import { CurrentUser } from "@/lib/current-user";
+import { CurrentUserRole } from "@/lib/current-user";
+import { AdminPage } from "./(admin)/_components/admin-page";
 
 const DashboardPage = async () => {
-  const currentUser = await CurrentUser();
+  const userRole = await CurrentUserRole();
   return (
     <div className="text-xl md:text-2xl lg:text-3xl">
-      Howdy {currentUser?.name}
+      {userRole === "ADMIN" && <AdminPage />}
     </div>
   );
 };
