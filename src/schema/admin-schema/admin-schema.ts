@@ -1,4 +1,4 @@
-import { Offer } from "@prisma/client";
+import { Offer, OrderStatus } from "@prisma/client";
 import * as z from "zod";
 
 export const HeroSchema = z.object({
@@ -71,4 +71,12 @@ export const ProductSchema = z.object({
   categoryId: z.string(),
   brandId: z.string(),
   image: z.object({ url: z.string() }).array(),
+});
+
+export const UpdateDeliveyStatus = z.object({
+  status: z.enum([
+    OrderStatus.IN_PROGRESS,
+    OrderStatus.ON_THE_WAY,
+    OrderStatus.DELIVERED,
+  ]),
 });

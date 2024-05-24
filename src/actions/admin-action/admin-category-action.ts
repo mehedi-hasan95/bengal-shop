@@ -17,7 +17,7 @@ export const CreateCategoryAction = async (
       data: values,
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/categories");
+    revalidatePath("/dashboard/admin/categories");
     return { success: "Category Created Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -40,7 +40,7 @@ export const UpdateCategoryAction = async (
       },
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/categories");
+    revalidatePath("/dashboard/admin/categories");
     return { success: "Category Updated Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -55,7 +55,7 @@ export const DeleteCategoryAction = async (id: string) => {
       where: { id },
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/categories");
+    revalidatePath("/dashboard/admin/categories");
     return { success: "Category Delete Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };

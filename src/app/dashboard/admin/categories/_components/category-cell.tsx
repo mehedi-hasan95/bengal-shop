@@ -50,7 +50,7 @@ export const CategoryCell = ({ data }: CategoryCellProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex items-center gap-x-1 cursor-pointer">
           <Link
-            href={`/dashboard/categories/${data.id}`}
+            href={`/dashboard/admin/categories/${data.id}`}
             className="flex items-center gap-x-1 cursor-pointer"
           >
             <Edit className="h-4 w-4" /> Edit Category

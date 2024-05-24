@@ -74,7 +74,7 @@ export const HeroCell: React.FC<HeroCellProps> = ({ data }) => {
         </DropdownMenuItem>
         <DropdownMenuItem className="flex items-center gap-x-1 cursor-pointer">
           <Link
-            href={`/dashboard/hero/${data.id}`}
+            href={`/dashboard/admin/hero/${data.id}`}
             className="flex items-center gap-x-1 cursor-pointer"
           >
             <Edit3 className="h-4 w-4" /> Edit Carousel

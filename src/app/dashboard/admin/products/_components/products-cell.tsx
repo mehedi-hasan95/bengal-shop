@@ -50,7 +50,7 @@ export const ProductsCell = ({ data }: ProductCellProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex items-center gap-x-1 cursor-pointer">
           <Link
-            href={`/dashboard/products/${data.id}`}
+            href={`/dashboard/admin/products/${data.id}`}
             className="flex items-center gap-x-1 cursor-pointer"
           >
             <Edit className="h-4 w-4" /> Edit Products

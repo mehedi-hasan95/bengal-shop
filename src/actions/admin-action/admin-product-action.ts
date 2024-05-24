@@ -45,7 +45,7 @@ export const CreateProductAction = async (
       },
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/products");
+    revalidatePath("/dashboard/admin/products");
     return { success: "Product Created Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -100,7 +100,7 @@ export const UpdateProductAction = async (
       },
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/products");
+    revalidatePath("/dashboard/admin/products");
     return { success: "Product Updated Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -116,7 +116,7 @@ export const DeleteProductAction = async (id: string) => {
       where: { id, ownerId: ownerId?.id },
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/products");
+    revalidatePath("/dashboard/admin/products");
     return { success: "Product Delete Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };

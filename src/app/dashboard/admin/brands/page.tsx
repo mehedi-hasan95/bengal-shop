@@ -18,7 +18,7 @@ const AdminCategories = async () => {
     <div>
       <div className="flex justify-between items-center">
         <TitleLabel label={`Total Brands (${data?.length})`} />
-        <Link href={"/dashboard/brands/new"}>
+        <Link href={"/dashboard/admin/brands/new"}>
           <Button>New Brand</Button>
         </Link>
       </div>

@@ -67,7 +67,7 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
         ? UpdateHeroCarouselAction(values, initianData?.id).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/hero");
+              router.replace("/dashboard/admin/hero");
             }
             if (data.error) {
               toast.error(data.error);
@@ -76,7 +76,7 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
         : CreateHeroCarouselAction(values).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/hero");
+              router.replace("/dashboard/admin/hero");
             }
             if (data.error) {
               toast.error(data.error);
@@ -89,7 +89,7 @@ export const HeroForm: React.FC<HeroFormProps> = ({ initianData }) => {
       DeleteHeroCarouselAction(id).then((data) => {
         if (data.success) {
           toast.success(data.success);
-          router.replace("/dashboard/hero");
+          router.replace("/dashboard/admin/hero");
         }
         if (data.error) {
           toast.error(data?.error);

@@ -18,5 +18,10 @@
     "id": 5,
     "name": "Brands",
     "url": "/dashboard/admin/brands"
+  },
+  {
+    "id": 5,
+    "name": "User Purchase",
+    "url": "/dashboard/admin/purchase"
   }
 ]

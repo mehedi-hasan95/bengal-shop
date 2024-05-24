@@ -72,7 +72,7 @@ export const BrandForm = ({ initialData }: BrandFormProps) => {
         ? UpdateBrandAction(data, initialData.id).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/brands");
+              router.replace("/dashboard/admin/brands");
             }
             if (data.error) {
               toast.error(data.error);
@@ -81,7 +81,7 @@ export const BrandForm = ({ initialData }: BrandFormProps) => {
         : CreateBrandAction(data).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/brands");
+              router.replace("/dashboard/admin/brands");
             }
             if (data.error) {
               toast.error(data.error);
@@ -95,7 +95,7 @@ export const BrandForm = ({ initialData }: BrandFormProps) => {
       DeleteBrandAction(id).then((data) => {
         if (data.success) {
           toast.success(data.success);
-          router.replace("/dashboard/brands");
+          router.replace("/dashboard/admin/brands");
         }
         if (data.error) {
           toast.error(data.error);

@@ -17,7 +17,7 @@ const AdminHero = async () => {
     <div>
       <div className="flex justify-between items-center">
         <TitleLabel label={`Total Hero Carousel (${data?.length})`} />
-        <Link href={"/dashboard/hero/new"}>
+        <Link href={"/dashboard/admin/hero/new"}>
           <Button>New Carousel</Button>
         </Link>
       </div>

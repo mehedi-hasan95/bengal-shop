@@ -18,7 +18,7 @@ const ProductsPage = async () => {
     <div>
       <div className="flex justify-between items-center">
         <TitleLabel label={`Total Products (${data.length})`} />
-        <Link href={`/dashboard/products/new`}>
+        <Link href={`/dashboard/admin/products/new`}>
           <Button>Create Products</Button>
         </Link>
       </div>

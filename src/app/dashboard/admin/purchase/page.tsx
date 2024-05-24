@@ -4,17 +4,13 @@ import { format } from "date-fns";
 import { PurchaseData } from "./_components/purchase-data";
 
 const UserPurchase = async () => {
-  const currentUser = await CurrentUser();
-  if (!currentUser) {
-    return { error: "Something went wrong" };
-  }
   const data = await prismaDb.order.findMany({
     where: {
       paid: true,
-      userId: currentUser.id,
     },
   });
   const formatData = data.map((item) => ({
+    id: item.id,
     title: item.title,
     quantity: item.quantity,
     price: item.price,

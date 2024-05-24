@@ -74,7 +74,7 @@ export const ProductsForm = ({
         ? UpdateProductAction(values, indititalData.id).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/products");
+              router.replace("/dashboard/admin/products");
             }
             if (data.error) {
               toast.error(data.error);
@@ -83,7 +83,7 @@ export const ProductsForm = ({
         : CreateProductAction(values).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/products");
+              router.replace("/dashboard/admin/products");
             }
             if (data.error) {
               toast.error(data.error);
@@ -96,7 +96,7 @@ export const ProductsForm = ({
       DeleteProductAction(id).then((data) => {
         if (data.success) {
           toast.success(data.success);
-          router.replace("/dashboard/products");
+          router.replace("/dashboard/admin/products");
         }
         if (data.error) {
           toast.error(data.error);

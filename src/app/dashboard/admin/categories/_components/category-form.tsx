@@ -70,7 +70,7 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
         ? UpdateCategoryAction(data, initialData.id).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/categories");
+              router.replace("/dashboard/admin/categories");
             }
             if (data.error) {
               toast.error(data.error);
@@ -79,7 +79,7 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
         : CreateCategoryAction(data).then((data) => {
             if (data.success) {
               toast.success(data.success);
-              router.replace("/dashboard/categories");
+              router.replace("/dashboard/admin/categories");
             }
             if (data.error) {
               toast.error(data.error);
@@ -93,7 +93,7 @@ export const CategoryForm = ({ initialData }: CategoryFormProps) => {
       DeleteCategoryAction(id).then((data) => {
         if (data.success) {
           toast.success(data.success);
-          router.replace("/dashboard/categories");
+          router.replace("/dashboard/admin/categories");
         }
         if (data.error) {
           toast.error(data.error);

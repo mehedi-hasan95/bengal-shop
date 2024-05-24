@@ -51,7 +51,7 @@ export const BrandCell = ({ data }: BrandCellProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem className="flex items-center gap-x-1 cursor-pointer">
           <Link
-            href={`/dashboard/brands/${data.id}`}
+            href={`/dashboard/admin/brands/${data.id}`}
             className="flex items-center gap-x-1 cursor-pointer"
           >
             <Edit className="h-4 w-4" /> Edit Brand

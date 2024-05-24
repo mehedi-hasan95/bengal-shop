@@ -18,7 +18,7 @@ export const CreateHeroCarouselAction = async (
       data: values,
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/hero");
+    revalidatePath("/dashboard/admin/hero");
     return { success: "Hero Carousel Created Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -43,7 +43,7 @@ export const UpdateHeroCarouselAction = async (
       },
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/hero");
+    revalidatePath("/dashboard/admin/hero");
     return { success: "Hero Carousel Update Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
@@ -60,7 +60,7 @@ export const DeleteHeroCarouselAction = async (id: string) => {
       },
     });
     revalidatePath("/");
-    revalidatePath("/dashboard/hero");
+    revalidatePath("/dashboard/admin/hero");
     return { success: "Hero Carousel Delete Successfully" };
   } catch (error) {
     return { error: "Something went wrong" };
