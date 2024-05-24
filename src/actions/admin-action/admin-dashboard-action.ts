@@ -26,13 +26,6 @@ export const GetTotalRevenueAction = async () => {
     },
   });
 
-  // Total Product
-  const TotalProduct = await prismaDb.products.count({
-    where: {
-      ownerId: currentUser?.id,
-    },
-  });
-
   // Revenue Graph
   const monthlyRevenue: { [key: number]: number } = {};
   for (const order of paidOrders) {
@@ -61,5 +54,5 @@ export const GetTotalRevenueAction = async () => {
     MonthlyGraphData[parseInt(month)].total = monthlyRevenue[parseInt(month)];
   }
 
-  return { TotalRevenue, SalesCount, TotalProduct, MonthlyGraphData };
+  return { TotalRevenue, SalesCount, MonthlyGraphData };
 };

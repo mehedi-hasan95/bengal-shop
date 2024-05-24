@@ -12,11 +12,12 @@ import {
 } from "recharts";
 interface Props {
   data: { name: string; total: number }[];
+  label: string;
 }
-export const MonthlyRevenueChart = ({ data }: Props) => {
+export const MonthlyRevenueChart = ({ data, label }: Props) => {
   return (
     <Card>
-      <h2 className="text-2xl font-bold p-5">Monthly Revenue:</h2>
+      <h2 className="text-2xl font-bold p-5">{label}</h2>
       <ResponsiveContainer width="100%" height={350}>
         <BarChart data={data}>
           <XAxis
