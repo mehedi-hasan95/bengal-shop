@@ -7,15 +7,18 @@ import {
   authRoutes,
   apiAuthPrefix,
   DEFAULT_LOGIN_REDIRECT,
+  apiAdminPrefix,
   apiWebhookPrefix,
 } from "@/routes";
+import { CurrentUserRole } from "./lib/current-user";
 
 // @ts-ignore
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLogIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isAdminRoute = nextUrl.pathname.startsWith(apiAdminPrefix);
   const isApiWebhookRoute = nextUrl.pathname.startsWith(apiWebhookPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -32,6 +35,14 @@ export default auth((req) => {
   //   User allow to login or register page. If login redirect to default page
   if (isAuthRoute) {
     if (isLogIn) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return null;
+  }
+  //   Allow Admin to the admin route. If login redirect to default page
+  const userRole = await CurrentUserRole();
+  if (isAdminRoute) {
+    if (userRole !== "ADMIN") {
       return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
     }
     return null;
