@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       })),
 
       success_url: `${process.env.NEXT_PUBLIC_URL}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_URL_FUCK}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_URL_SHOP}`,
       metadata: {
         ids: JSON.stringify(createOrder.map((item: any) => ({ id: item }))),
       },

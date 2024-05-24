@@ -19,14 +19,14 @@ const CartSummery = ({ data }: Props) => {
 
   const onCart = async () => {
     try {
-      const fuck = { data };
+      const rettriveData = { data };
       // const stripe = await stripePromise()
       const response = await fetch("/api/payment", {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(fuck),
+        body: JSON.stringify(rettriveData),
       });
 
       const result = await response.json();
