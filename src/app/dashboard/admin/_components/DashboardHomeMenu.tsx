@@ -1,4 +1,4 @@
-import menu from "@/app/dashboard/(admin)/_components/admin-menu.json";
+import menu from "@/app/dashboard/admin/_components/admin-menu.json";
 import { AdminMenuItems } from "./AdminMenuItems";
 import { DashboardHome } from "./dashboard-home";
 export const DashboardHomeMenu = () => {

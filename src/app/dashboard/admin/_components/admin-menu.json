@@ -2,21 +2,21 @@
   {
     "id": 2,
     "name": "Carousel",
-    "url": "/dashboard/hero"
+    "url": "/dashboard/admin/hero"
   },
   {
     "id": 3,
     "name": "Categories",
-    "url": "/dashboard/categories"
+    "url": "/dashboard/admin/categories"
   },
   {
     "id": 4,
     "name": "Products",
-    "url": "/dashboard/products"
+    "url": "/dashboard/admin/products"
   },
   {
     "id": 5,
     "name": "Brands",
-    "url": "/dashboard/brands"
+    "url": "/dashboard/admin/brands"
   }
 ]
